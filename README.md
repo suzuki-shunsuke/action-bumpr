@@ -69,7 +69,7 @@ jobs:
           persist-credentials: false
       # Bump version on merging Pull Requests with specific labels.
       # (bump:major,bump:minor,bump:patch)
-      - uses: suzuki-shunsuke/action-bumpr@v1
+      - uses: suzuki-shunsuke/action-bumpr@afd816c0ed625394a2ea02799e0de9cbd7ec8b64 # v0.0.1
 ```
 
 On `pull_request` `labeled` event, the action posts a comment of the next version to the pull request.
