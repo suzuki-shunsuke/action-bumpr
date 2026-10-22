@@ -170,8 +170,15 @@ const getVersions = async (
   if (current !== undefined) {
     return { currentVersion: current, nextVersion: nextTag(current, level) };
   }
-  if ((await git(["tag"])) === "") {
+  const tags = await git(["tag"]);
+  if (tags === "") {
     return { currentVersion: "", nextVersion: initialVersion[level] };
+  }
+  // Tags may not be merged into HEAD if release commits are created outside the default branch.
+  // e.g. JavaScript Actions whose release commits include built files.
+  const latest = latestTag(tags.split("\n"));
+  if (latest !== undefined) {
+    return { currentVersion: latest, nextVersion: nextTag(latest, level) };
   }
   throw new Error("Cannot find next version.");
 };
