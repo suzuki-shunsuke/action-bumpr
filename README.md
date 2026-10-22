@@ -22,6 +22,7 @@ This action computes the next version by itself, so it works on any runner suppo
 - The labels must be exactly `bump:major`, `bump:minor`, or `bump:patch`
 - `skip` is set to `true` also when the label attached by `labeled` event doesn't start with `bump:`
 - It doesn't change the local git config (`user.name` and `user.email`)
+- If no tag is merged into `HEAD`, it uses the latest tag in the repository instead of failing
 
 ## Inputs
 
@@ -75,6 +76,8 @@ On `pull_request` `labeled` event, the action posts a comment of the next versio
 On `push` event, the action creates and pushes the next version tag, and posts a comment to the merged pull request.
 
 The action fetches all tags and history if the repository is shallow, because it computes the current version from tags merged into `HEAD`.
+If no tag is merged into `HEAD`, the action uses the latest tag in the repository instead.
+This is useful when release commits are created outside the default branch, e.g. JavaScript Actions whose release commits include built files.
 If the repository has no tag, the next version is `v1.0.0`, `v0.1.0`, or `v0.0.1`.
 
 ### Note
