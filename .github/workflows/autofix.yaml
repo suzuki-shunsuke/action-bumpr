@@ -1,0 +1,24 @@
+---
+name: autofix.ci
+on: pull_request
+permissions: {}
+jobs:
+  fix:
+    uses: suzuki-shunsuke/js-autofix-action/.github/workflows/autofix-ci.yaml@ae72b65e2f3649deeaddac1ba350d2d1266f647d # v0.0.4
+    permissions:
+      contents: read
+      id-token: write
+    with:
+      aqua_version: v2.64.0
+    secrets:
+      TAKUMI_GUARD_BOT_ID: ${{secrets.TAKUMI_GUARD_BOT_ID}}
+  autofix:
+    # Required status check of this workflow
+    runs-on: ubuntu-26.04
+    if: always() && (contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled'))
+    timeout-minutes: 10
+    permissions: {}
+    needs:
+      - fix
+    steps:
+      - run: exit 1

@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/suzuki-shunsuke/pinact/main/json-schema/pinact.json
+version: 3
+rules:
+  # action-bumpr isn't released yet, so the example in README.md can't be pinned.
+  # Remove this rule and pin it after the first release.
+  - ignore: true
+    conditions:
+      - expr: |
+          ActionRepoFullName == "suzuki-shunsuke/action-bumpr"
