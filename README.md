@@ -63,7 +63,7 @@ jobs:
       contents: write # Push tags
       pull-requests: write # Post comments
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       # Bump version on merging Pull Requests with specific labels.
