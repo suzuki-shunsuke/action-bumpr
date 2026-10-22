@@ -1,0 +1,45 @@
+name: bumpr - Bump version when merging Pull Request with specific labels
+description: Bump version when merging Pull Request with specific labels (bump:major,bump:minor,bump:patch)
+author: Shunsuke Suzuki
+
+branding:
+  icon: corner-right-up
+  color: gray-dark
+
+inputs:
+  default_bump_level:
+    description: |
+      Default bump level if labels are not attached [major,minor,patch].
+      Do nothing if it's empty.
+    required: false
+  dry_run:
+    description: Do not actually tag next version if it's true
+    required: false
+    default: "false"
+  github_token:
+    description: |
+      GitHub Access Token to get pull requests, post comments, and push tags.
+      contents:write - Push tags
+      pull-requests:write - Post comments to pull requests
+    required: false
+    default: ${{ github.token }}
+  tag_as_user:
+    description: Name to use when creating tags. By default, github.actor is used.
+    required: false
+  tag_as_email:
+    description: Email address to use when creating tags. By default, <github.actor>@users.noreply.github.com is used.
+    required: false
+
+outputs:
+  current_version:
+    description: current version
+  next_version:
+    description: next version
+  skip:
+    description: True if release is skipped. e.g. No labels attached to PR.
+  message:
+    description: Tag message
+
+runs:
+  using: "node24"
+  main: "dist/index.js"
